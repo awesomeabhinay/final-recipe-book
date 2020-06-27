@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">Recipe Book</a>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" (click) = "onSelect('recipe')" style="cursor: pointer;">Recipes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click) = "onSelect('shopping-list')" style="cursor: pointer;">Shopping List</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav my-2 my-lg-0">
+      <li class="nav-item dropdown mr-sm-2" appDropdown>
+        <a style="cursor: pointer;" class="nav-link dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a style="cursor: pointer;">Save Data</a></li>
+          <li><a style="cursor: pointer;">Fetch Data</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
