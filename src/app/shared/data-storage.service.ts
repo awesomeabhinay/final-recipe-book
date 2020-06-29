@@ -5,19 +5,23 @@ import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Ingredient } from './ingredient.model';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataStorageService{
     constructor(private http: Http,
                 private recipeService: RecipeService,
-                private slService: ShoppingListService){}
+                private slService: ShoppingListService,
+                private authService: AuthService){}
 
-    storeRecipes(){
-        return this.http.put('https://recipe-book-d43b8.firebaseio.com/recipes.json', this.recipeService.getRecipes());
+    storeRecipes() {
+        const token = this.authService.getToken();
+        return this.http.put('https://recipe-book-d43b8.firebaseio.com/recipes.json?auth=' + token, this.recipeService.getRecipes());
     }
 
     fetchRecipes(){
-        this.http.get('https://recipe-book-d43b8.firebaseio.com/recipes.json')
+        const token = this.authService.getToken();
+        this.http.get('https://recipe-book-d43b8.firebaseio.com/recipes.json?auth=' + token)
         .pipe(
             map(
                 (response: Response) => {
@@ -39,12 +43,14 @@ export class DataStorageService{
         );
     }
 
-    storeShoppingList(){
-        return this.http.put('https://recipe-book-d43b8.firebaseio.com/shopping-list.json', this.slService.getIngredients());
+    storeShoppingList() {
+        const token = this.authService.getToken();
+        return this.http.put('https://recipe-book-d43b8.firebaseio.com/shopping-list.json?auth=' + token, this.slService.getIngredients());
     }
 
-    fetchShoppingList(){
-        this.http.get('https://recipe-book-d43b8.firebaseio.com/shopping-list.json').pipe(
+    fetchShoppingList() {
+        const token = this.authService.getToken();
+        this.http.get('https://recipe-book-d43b8.firebaseio.com/shopping-list.json?auth=' + token).pipe(
             map(
                 (response: Response) => {
                     let ingredients: Ingredient[] = response.json();
